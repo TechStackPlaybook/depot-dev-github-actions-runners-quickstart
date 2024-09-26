@@ -1,4 +1,4 @@
-name: Build and Deploy AI Container with Depot
+name: Build & Deploy AI Container w/ Depot
 
 on: [push]
 
@@ -13,7 +13,7 @@ jobs:
       # Step 2: Install Depot CLI
       - name: Install Depot CLI
         run: |
-          curl -fsSL https://depot.dev/install.sh | sh
+          curl -L https://depot.dev/install-cli.sh | sh
           echo "$HOME/.depot/bin" >> $GITHUB_PATH
 
       # Step 3: Set up Docker Buildx
