@@ -1,0 +1,10 @@
+project: ai-container-depot
+platform: linux/amd64
+
+builds:
+  huggingface-container:
+    dockerfile: Dockerfile
+    context: .
+    cache: true
+    tags:
+      - ai-container-depot:latest
