@@ -20,6 +20,7 @@ jobs:
       - name: Build Docker Image with Depot
         env:
           DEPOT_PROJECT_ID: ${{ secrets.DEPOT_PROJECT_ID }}
+          DEPOT_TOKEN: ${{ secrets.DEPOT_API_TOKEN }}
         run: depot build -t depot-dev-github-actions-runners-quickstart:latest --push .
 
       # Step 4: Configure AWS credentials
