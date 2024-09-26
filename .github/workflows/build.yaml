@@ -1,6 +1,6 @@
 name: Build & Deploy AI Container w/ Depot
 
-on: [push]
+on: [push] 
 
 jobs:
   build:
