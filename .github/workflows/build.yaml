@@ -16,7 +16,7 @@ jobs:
           curl -L https://depot.dev/install-cli.sh | sh
           echo "$HOME/.depot/bin" >> $GITHUB_PATH
 
-      # Step 3: Configure AWS credentials
+      # Step 3: Configure AWS credentials (before ECR login)
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -30,17 +30,9 @@ jobs:
         run: |
           aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com
 
-      # Step 5: Build and Push Docker Image with Depot (AWS ECR Tag)
+      # Step 5: Build and Push Docker Image with Depot (to AWS ECR)
       - name: Build Docker Image with Depot
         env:
           DEPOT_PROJECT_ID: ${{ secrets.DEPOT_PROJECT_ID }}
           DEPOT_TOKEN: ${{ secrets.DEPOT_API_TOKEN }}
         run: depot build -t ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/depot-dev-github-actions-runners-quickstart:latest --push .
-
-      # Step 6: Tag Docker image (optional step if tagging is required later)
-      - name: Tag Docker Image
-        run: docker tag depot-dev-github-actions-runners-quickstart:latest ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/depot-dev-github-actions-runners-quickstart:latest
-
-      # Step 7: Push Docker image to Amazon ECR
-      - name: Push to Amazon ECR
-        run: docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/depot-dev-github-actions-runners-quickstart:latest
